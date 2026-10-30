@@ -8,9 +8,11 @@ const listingController = require("../controllers/listingController.js");
 
 
 
+router.route("/")
+    .get(wrapAsync(listingController.index)) //index route
+    .post(isLoggedIn, validateListing, wrapAsync(listingController.createListing)); 
+//create route
 
-//index route
-router.get("/", wrapAsync(listingController.index));
 
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm)
@@ -18,9 +20,6 @@ router.get("/new", isLoggedIn, listingController.renderNewForm)
 //show route
 router.get("/:id", wrapAsync(listingController.showListing));
 
-
-//create route
-router.post("/", isLoggedIn, validateListing, wrapAsync(listingController.createListing));
 
 //Edit rout
 router.get("/:id/edit", isLoggedIn, isOwned, wrapAsync(listingController.editForm));
