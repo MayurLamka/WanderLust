@@ -10,6 +10,7 @@ const path = require("path")
 const methodoverride = require("method-override")
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const Localstrategy = require("passport-local");
@@ -41,16 +42,36 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
 
+
+
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+
+    crypto: {
+        secret: process.env.SECRET,
+    },
+
+    touchAfter: 24 * 3600,
+});
+
+store.on("error", (err) => {
+    console.log("ERROR in Mongo session store", err);
+});
+
+
 const sessionOption = {
-    secret: "mysecretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
+
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        // httpOnly: true,
+        httpOnly: true,
     },
-}
+};
 
 
 app.use(session(sessionOption));
@@ -75,17 +96,6 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "public")))
 
 
-// app.get("/demouser", async (req, res)=>{
-//     let fakeUser = new User({
-//             email: "fakeuser@gmail.com",
-//             username: "fekaeuser"
-//     });
-
-//      let registredUser = await User.register(fakeUser, "fakeuser");
-//  res.send(registredUser);
-// });
-
-
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -99,7 +109,9 @@ app.all("/*splat", (req, res, next) => {
 
 app.use((err, req, res, next) => {
     let { status = 500, message = "something went wrong" } = err;
-    // res.status(status).send(message)
+
+    res.locals.currUser = req.user || null;
+
     res.status(status).render("error.ejs", { message });
 });
 
