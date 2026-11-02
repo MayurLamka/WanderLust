@@ -105,7 +105,11 @@ app.use("/", userRouter);
 app.all("/*splat", (req, res, next) => {
 
     next(new ExpressError(404, "Page not Found!"));
-})
+});
+
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 
 app.use((err, req, res, next) => {
     let { status = 500, message = "something went wrong" } = err;
