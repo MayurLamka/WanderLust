@@ -5,7 +5,9 @@ const map = new mapboxgl.Map({
     zoom: 9 // starting zoom
 });
 
-
+map.on("load", () => {
+    map.resize();
+});
 
 const marker1 = new mapboxgl.Marker()
     .setLngLat(listing.geometry.coordinates)

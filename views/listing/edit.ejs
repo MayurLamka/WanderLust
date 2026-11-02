@@ -5,34 +5,35 @@
 
             <h3>Edit Listing</h3>
             <br><br>
-            <form method="post" action="/listings/<%= listing._id%>?_method=put" novalidate class="needs-validation" enctype="multipart/form-data">
+            <form method="post" action="/listings/<%= listing._id%>?_method=put" novalidate class="needs-validation"
+                enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" name="listing[title]" value="<%=listing.title%>" class="form-control" required>
                     <div class="invalid-feedback">
-                    Please enter title.
-                </div>
+                        Please enter title.
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">
                         Description
                     </label>
-                    <textarea type="text" name="listing[description]"
-                        class="form-control" required><%=listing.description%></textarea>
-                         <div class="invalid-feedback">
-                    Please enter description.
-                </div>
+                    <textarea type="text" name="listing[description]" class="form-control"
+                        required><%=listing.description%></textarea>
+                    <div class="invalid-feedback">
+                        Please enter description.
+                    </div>
                 </div>
 
 
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" name="listing[price]" value="<%=listing.price%>" class="form-control" required>
-                     <div class="invalid-feedback">
-                    Please enter price.
-                </div>
+                    <div class="invalid-feedback">
+                        Please enter price.
+                    </div>
                 </div>
 
                 <div class="mb-3 original-img">
@@ -43,26 +44,45 @@
                 <div class="mb-3">
                     <label for="image" class="form-label">New Image</label>
 
-                    <input type="file" name="listing[image]"  class="form-control" >
-                
+                    <input type="file" name="listing[image]" class="form-control">
+
+                </div>
+
+                <!-- Category -->
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+
+                    <select class="form-select" name="listing[category]" id="category">
+
+                        <% for (let category of categories) { %>
+
+                            <option value="<%= category %>" <%=listing.category===category ? "selected" : "" %>>
+                                <%= category %>
+                            </option>
+
+                            <% } %>
+
+                    </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
 
-                    <input type="text" name="listing[location]" value="<%=listing.location%>" class="form-control" required>
-                     <div class="invalid-feedback">
-                    Please enter location.
-                </div>
+                    <input type="text" name="listing[location]" value="<%=listing.location%>" class="form-control"
+                        required>
+                    <div class="invalid-feedback">
+                        Please enter location.
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
 
-                    <input type="text" name="listing[country]" value="<%=listing.country%>" class="form-control" required>
+                    <input type="text" name="listing[country]" value="<%=listing.country%>" class="form-control"
+                        required>
                     <div class="invalid-feedback">
-                    Please enter country.
-                </div>
+                        Please enter country.
+                    </div>
                 </div>
 
                 <button class="btn btn-dark mt-3 edit-btn">Edit</button>

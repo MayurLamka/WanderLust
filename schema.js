@@ -9,16 +9,16 @@ const listingSchema = Joi.object({
         country: Joi.string().required(),
         image: Joi.string().allow("", null),
         category: Joi.string().valid(
-            "trending",
-            "rooms",
-            "iconic-cities",
-            "mountains",
-            "castles",
-            "amazing-pools",
-            "farms",
-            "camping",
-            "desert",
-            "forest"
+            "Trending",
+            "Rooms",
+            "Iconic-cities",
+            "Mountains",
+            "Castles",
+            "Pools",
+            "Farms",
+            "Camping",
+            "Desert",
+            "Forest"
         ).required(),
     }).required()
 });

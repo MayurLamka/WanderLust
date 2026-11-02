@@ -27,6 +27,7 @@ router.get("/category/:category", wrapAsync(listingController.filterCategory));
 router.route("/:id")
     .get(wrapAsync(listingController.showListing))
     .put(isLoggedIn, isOwned, upload.single('listing[image]'), validateListing, wrapAsync(listingController.updateRoute))
+    
     .delete(isLoggedIn, isOwned, wrapAsync(listingController.deleteListing));
 
 

@@ -78,28 +78,55 @@ module.exports.editForm = async (req, res) => {
         "/upload/w_250/"
     );
 
+    const categories = Listing.schema.path("category").enumValues;
 
-    res.render("listing/edit.ejs", { listing, lowQualityImageUrl });
+    res.render("listing/edit.ejs", { listing, lowQualityImageUrl, categories });
 }
 
 module.exports.updateRoute = async (req, res) => {
+     console.time("TOTAL UPDATE");
     let { id } = req.params;
 
+    console.time("MAPBOX");
 
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    let response = await geocodingClient
+        .forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1
+        })
+        .send();
+
+        console.timeEnd("MAPBOX");
+
+          console.time("MONGODB UPDATE")
+
+    let listing = await Listing.findByIdAndUpdate(
+        id,
+        {
+            ...req.body.listing,
+            geometry: response.body.features[0].geometry
+        },
+        { runValidators: true, new: true }
+    );
+
+     console.timeEnd("MONGODB UPDATE");
 
     if (typeof req.file !== "undefined") {
+         console.time("IMAGE UPDATE");
+
         let url = req.file.path;
         let filename = req.file.filename;
+
         listing.image = { url, filename };
-        await listing.save()
+        await listing.save();
+
+         console.timeEnd("IMAGE UPDATE");
     }
 
     req.flash("Success", "Listing updated");
-
-    res.redirect(`/listings/${id}`)
-
-}
+    console.timeEnd("TOTAL UPDATE");
+    res.redirect(`/listings/${id}`);
+};
 
 module.exports.deleteListing = async (req, res) => {
     let { id } = req.params;
@@ -112,6 +139,11 @@ module.exports.filterCategory = async (req, res) => {
     let { category } = req.params;
 
     let allListings = await Listing.find({ category: category });
+  
+    if (allListings.length === 0) {
+        req.flash("error", "Sorry No such place for your filter")
+        return res.redirect("/listings");
+    }
     res.render("./listing/index.ejs", { allListings })
 
 }

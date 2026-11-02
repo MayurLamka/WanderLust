@@ -1,122 +1,88 @@
 <% layout("/layouts/boilerplate") %>
-    <style>
-        #filters {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter {
-            margin-right: 2rem;
-            text-align: center;
-            margin-top: 2rem;
-            opacity: 0.7;
-
-        }
-
-        .filter:hover {
-            opacity: 1;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .filter p {
-            font-size: 0.8rem;
-
-        }
-
-        .filter a {
-            text-decoration: none;
-            color: black;
-        }
-
-        .tax-info {
-            display: none;
-        }
-
-        .tax-toggle {
-            border: 1px solid black;
-            border-radius: 1rem;
-            height: 3.5rem;
-            padding: 1rem;
-            
-
-        }
-    </style>
 
 
     <div id="filters">
-        <div class="filter">
-            <a href="/listings">
-                <div><i class="fa-solid fa-house"></i></div>
-                <p>All</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/trending">
-                <div><i class="fa-solid fa-fire"></i></div>
-                <p>Trending</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/rooms">
-                <div><i class="fa-solid fa-bed"></i></div>
-                <p>Rooms</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/iconic-cities">
-                <div><i class="fa-solid fa-mountain-city"></i></div>
-                <p>Iconic-cities</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/mountains">
-                <div><i class="fa-solid fa-mountain"></i></div>
-                <p>Mountains</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/castles">
-                <div><i class="fa-brands fa-fort-awesome"></i></div>
-                <p>Castles</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/amazing-pools">
-                <div><i class="fa-solid fa-person-swimming"></i></div>
-                <p>Pools</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/farms">
-                <div><i class="fa-solid fa-tractor"></i></div>
-                <p>Farms</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/camping">
-                <div><i class="fa-solid fa-campground"></i></div>
-                <p>Camping</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/desert">
-                <div><i class="fa-solid fa-sun-plant-wilt"></i></div>
-                <p>Desert</p>
-            </a>
-        </div>
-        <div class="filter">
-            <a href="/listings/category/forest">
-                <div><i class="fa-mosaic fa-solid fa-tree"></i></div>
-                <p>Forest</p>
-            </a>
-        </div>
-        <div class="tax-toggle">
-            <div class="form-field">
-                <div class="form-switch form-check-reverse">
-                    <input class="form-check-input" type="checkbox" value="" id="switch" role="switch" switch>
-                    <label class="form-check-label" for="switchMdLabel">Display total after taxes</label>
+        <button id="filterToggle" class="filter-toggle">
+            <i class="fa-solid fa-chevron-down"></i>
+            <span>Show Filters</span>
+        </button>
+        <div id="filterContent">
+
+            <div class="filter">
+                <a href="/listings">
+                    <div><i class="fa-solid fa-house"></i></div>
+                    <p>All</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/trending">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/rooms">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/iconic-cities">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Iconic-cities</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/mountains">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <p>Mountains</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/castles">
+                    <div><i class="fa-brands fa-fort-awesome"></i></div>
+                    <p>Castles</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/amazing-pools">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Pools</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/farms">
+                    <div><i class="fa-solid fa-tractor"></i></div>
+                    <p>Farms</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/camping">
+                    <div><i class="fa-solid fa-campground"></i></div>
+                    <p>Camping</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/desert">
+                    <div><i class="fa-solid fa-sun-plant-wilt"></i></div>
+                    <p>Desert</p>
+                </a>
+            </div>
+            <div class="filter">
+                <a href="/listings/category/forest">
+                    <div><i class="fa-mosaic fa-solid fa-tree"></i></div>
+                    <p>Forest</p>
+                </a>
+            </div>
+
+            <div class="tax-toggle">
+                <div class="form-field">
+                    <div class="form-switch form-check-reverse">
+                        <input class="form-check-input" type="checkbox" value="" id="switch" role="switch" switch>
+                        <label class="form-check-label" for="switch">
+                            Display total after taxes
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,12 +119,34 @@
                 if (info.style.display != "inline") {
 
                     info.style.display = "inline"
-                    let includingTax = taxablePrices[i]*0.18 + taxablePrices[i]
+                    let includingTax = taxablePrices[i] * 0.18 + taxablePrices[i]
                     info.innerHTML = `(With 18% tax &#8377;${includingTax.toFixed(2)})`
-                   
+
                 } else {
                     info.style.display = "none"
                 }
             }
-        })
+        });
+
+
+        //Responsive
+        const filterToggle = document.getElementById("filterToggle");
+        const filterContent = document.getElementById("filterContent");
+
+        filterToggle.addEventListener("click", () => {
+             console.log("Filter button clicked!");
+    console.log(filterContent.classList);
+
+            const isOpen = filterContent.classList.toggle("show");
+
+            const icon = filterToggle.querySelector("i");
+            const text = filterToggle.querySelector("span");
+
+            icon.className = isOpen
+                ? "fa-solid fa-chevron-up"
+                : "fa-solid fa-chevron-down";
+
+            text.innerText = isOpen ? "Hide Filters" : "Show Filters";
+
+        });
     </script>

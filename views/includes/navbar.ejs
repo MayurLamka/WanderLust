@@ -1,36 +1,72 @@
 <style>
+    .search-btn {
+        background-color: #fe424d;
+        color: #ffffff;
+        border-radius: 25px;
+        padding: 0 1rem 0 1rem;
+    }
 
-.search-btn{
-    background-color: #fe424d;
-    color: #ffffff;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-}
-.search-btn:hover{
-    background-color: #fe424d;
-    color: #ffffff;
-}
-.search-btn i{
-    display: inline;
-    margin-right: 0.5rem;
-}
-.search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 0.8rem;
-}
+    .search-btn:hover {
+        background-color: #fe424d;
+        color: #ffffff;
+    }
+
+    .search-btn i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+
+    .search-inp {
+        border-radius: 25px;
+        padding: 0.5rem 3rem 0.5rem 3rem;
+        font-size: 0.8rem;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        background-color: white;
+    }
+
+    /* Mobile navbar */
+    @media (max-width: 767px) {
+        .navbar-collapse {
+            position: static;
+            width: 100%;
+            background-color: white;
+            padding: 10px 15px;
+        }
+
+        .navbar-collapse .navbar-nav {
+            margin-left: 0 !important;
+            margin-bottom: 10px;
+        }
+
+        .navbar-collapse form {
+            margin: 10px 0;
+        }
+
+        .navbar-collapse .search-inp {
+            width: 100%;
+        }
+    }
 </style>
-
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
+
         <a class="navbar-brand" href="/listings">
             <i class="fa-solid fa-compass"></i>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
             <div class="navbar-nav">
@@ -39,23 +75,28 @@
 
             <div class="navbar-nav ms-auto">
                 <form action="/listings/search" method="get" class="d-flex" role="search">
-                    <input class="form-control me-2 search-inp" name="destination" type="search" placeholder="Search destination" aria-label="Search" />
-                    <button class="btn search-btn" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                    <input class="form-control me-2 search-inp" name="destination" type="search"
+                        placeholder="Search destination">
+
+                    <button class="btn search-btn" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                    </button>
                 </form>
             </div>
 
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="/listings/new">Airbnb your home</a>
 
-                <% if(!currUser){ %>
+                <% if (!currUser) { %>
                     <a class="nav-link" href="/signup"><b>Signup</b></a>
                     <a class="nav-link" href="/login"><b>Login</b></a>
-                    <%}%>
+                    <% } %>
 
-                        <% if(currUser){ %>
+                        <% if (currUser) { %>
                             <a class="nav-link" href="/logout"><b>Logout</b></a>
-                            <%}%>
+                            <% } %>
             </div>
+
         </div>
     </div>
 </nav>
