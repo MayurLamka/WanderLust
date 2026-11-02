@@ -24,6 +24,7 @@ const reviewRouter = require("./Routes/reviews.js");
 const userRouter = require("./Routes/user.js");
 const User = require("./models/user.js")
 
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then(() => {
     console.log("Connection succesfull")
@@ -31,7 +32,7 @@ main().then(() => {
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+    await mongoose.connect(dbUrl);
 
 }
 
@@ -51,9 +52,6 @@ const sessionOption = {
     },
 }
 
-app.get("/", (req, res) => {
-    res.send("Hey, I am Root")
-});
 
 app.use(session(sessionOption));
 app.use(flash())

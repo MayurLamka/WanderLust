@@ -349,4 +349,74 @@ const sampleListings = [
   },
 ];
 
-module.exports = { data: sampleListings };
+const destinations = [
+    // India
+    { location: "Goa", country: "India", coordinates: [73.8567, 15.2993] },
+    { location: "Mumbai", country: "India", coordinates: [72.8777, 19.0760] },
+    { location: "Manali", country: "India", coordinates: [77.1892, 32.2432] },
+    { location: "Jaipur", country: "India", coordinates: [75.7873, 26.9124] },
+    { location: "Kerala", country: "India", coordinates: [76.2711, 10.8505] },
+    { location: "Udaipur", country: "India", coordinates: [73.7125, 24.5854] },
+    { location: "Shimla", country: "India", coordinates: [77.1734, 31.1048] },
+    { location: "Rishikesh", country: "India", coordinates: [78.2676, 30.0869] },
+    { location: "Darjeeling", country: "India", coordinates: [88.2636, 27.0410] },
+    { location: "Srinagar", country: "India", coordinates: [74.7973, 34.0837] },
+
+    // USA
+    { location: "Malibu", country: "USA", coordinates: [-118.7798, 34.0259] },
+    { location: "New York", country: "USA", coordinates: [-74.0060, 40.7128] },
+    { location: "Aspen", country: "USA", coordinates: [-106.8175, 39.1911] },
+    { location: "Los Angeles", country: "USA", coordinates: [-118.2437, 34.0522] },
+    { location: "Portland", country: "USA", coordinates: [-122.6784, 45.5152] },
+    { location: "Lake Tahoe", country: "USA", coordinates: [-120.0324, 39.0968] },
+    { location: "Boston", country: "USA", coordinates: [-71.0589, 42.3601] },
+    { location: "Miami", country: "USA", coordinates: [-80.1918, 25.7617] },
+    { location: "Montana", country: "USA", coordinates: [-110.3626, 46.8797] },
+    { location: "Charleston", country: "USA", coordinates: [-79.9311, 32.7765] },
+
+    // Australia
+    { location: "Sydney", country: "Australia", coordinates: [151.2093, -33.8688] },
+    { location: "Melbourne", country: "Australia", coordinates: [144.9631, -37.8136] },
+    { location: "Brisbane", country: "Australia", coordinates: [153.0251, -27.4698] },
+    { location: "Perth", country: "Australia", coordinates: [115.8605, -31.9505] },
+    { location: "Gold Coast", country: "Australia", coordinates: [153.4000, -28.0167] },
+    { location: "Adelaide", country: "Australia", coordinates: [138.6007, -34.9285] },
+    { location: "Cairns", country: "Australia", coordinates: [145.7781, -16.9186] },
+    { location: "Hobart", country: "Australia", coordinates: [147.3272, -42.8821] },
+    { location: "Darwin", country: "Australia", coordinates: [130.8456, -12.4634] }
+];
+
+const categories = [
+    "amazing-pools",
+    "iconic-cities",
+    "mountains",
+    "castles",
+    "forest",
+    "rooms",
+    "camping",
+    "farms",
+    "desert",
+    "trending"
+];
+
+const updatedListings = sampleListings.map((listing, index) => {
+
+    const destination = destinations[index];
+
+    return {
+        ...listing,
+
+        location: destination.location,
+        country: destination.country,
+
+        category: categories[index % categories.length],
+
+        geometry: {
+            type: "Point",
+            coordinates: destination.coordinates
+        }
+    };
+});
+
+module.exports = { data: updatedListings };
+

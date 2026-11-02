@@ -40,8 +40,8 @@ module.exports.isOwned = async (req, res, next) => {
 module.exports.validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
     if (error) {
-        let errmsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(404, errmsg);
+        // let errmsg = error.details.map((el) => el.message).join(",");
+        // throw new ExpressError(404, errmsg);
     } else {
         next();
     }

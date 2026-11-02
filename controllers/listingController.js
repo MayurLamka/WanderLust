@@ -1,4 +1,9 @@
 const Listing = require("../models/listing");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapTooken = process.env.MAP_TOKEN
+const geocodingClient = mbxGeocoding({ accessToken: mapTooken });
+
+
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -6,9 +11,12 @@ module.exports.index = async (req, res) => {
     res.render("./listing/index.ejs", { allListings })
 }
 
-module.exports.renderNewForm = (req, res) => {
+module.exports.renderNewForm = async (req, res) => {
 
-    res.render("./listing/new.ejs")
+
+    const categories = Listing.schema.path("category").enumValues;
+
+    res.render("./listing/new.ejs", { categories })
 }
 
 module.exports.showListing = async (req, res) => {
@@ -32,14 +40,25 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
 
+    let response = await geocodingClient
+        .forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1
+        })
+
+        .send()
+
     let url = req.file.path;
     let filename = req.file.filename;
-
 
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
-    await newListing.save();
+
+    newListing.geometry = response.body.features[0].geometry;
+
+    let saveedListing = await newListing.save();
+    console.log(saveedListing);
     req.flash("Success", "New listing created");
     res.redirect("/listings")
 
@@ -59,7 +78,7 @@ module.exports.editForm = async (req, res) => {
         "/upload/w_250/"
     );
 
-    
+
     res.render("listing/edit.ejs", { listing, lowQualityImageUrl });
 }
 
@@ -87,4 +106,23 @@ module.exports.deleteListing = async (req, res) => {
     await Listing.findByIdAndDelete(id);
     req.flash("Success", "Listing deleted");
     res.redirect("/listings");
+}
+
+module.exports.filterCategory = async (req, res) => {
+    let { category } = req.params;
+
+    let allListings = await Listing.find({ category: category });
+    res.render("./listing/index.ejs", { allListings })
+
+}
+
+module.exports.searchDestination = async (req, res) => {
+    let { destination } = req.query;
+    let allListings = await Listing.find({
+        $or: [
+            { country: destination },
+            { location: destination }
+        ]
+    });
+    res.render("./listing/index.ejs", { allListings })
 }
